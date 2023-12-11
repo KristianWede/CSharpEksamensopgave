@@ -1,14 +1,9 @@
 public class Scanner
 {
-    public delegate void PriceCalculationDelegate(List<Product> products);
-    public event PriceCalculationDelegate? PriceCalculationEvent;
+    public delegate void PriceCalculationDelegate(List<Product> product);
+    public event PriceCalculationDelegate PriceCalculationEvent;
 
-    private List<Product> scannedProducts;
-
-    public Scanner()
-    {
-        scannedProducts = new List<Product>();
-    }
+    private List<Product> scannedProducts = new List<Product>();
 
     public void Scan(Product product)
     {
@@ -18,7 +13,7 @@ public class Scanner
         // Add the scanned product to the list
         scannedProducts.Add(product);
 
-        // Trigger the event with the current list of scanned products
-        PriceCalculationEvent?.Invoke(scannedProducts);
+        // Trigger the event with the list of all scanned products
+         PriceCalculationEvent?.Invoke(scannedProducts);
     }
 }
