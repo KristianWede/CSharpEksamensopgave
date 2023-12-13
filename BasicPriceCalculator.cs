@@ -59,39 +59,41 @@ public class BasicPriceCalculator
                 {
                     itemTotalPrice = quantity * product.Price;
                 }
-
-                groupSubtotal += itemTotalPrice; // Add the item's total price to the group's subtotal.
+            // Add Pant to item total price if applicable
+            if (product.Pant.HasValue)
+            {
+                decimal pantTotal = product.Pant.Value * quantity;
+                itemTotalPrice += pantTotal; // Include Pant in the item total price
+                // Optionally, you can display the Pant information if needed
+                //Console.WriteLine($"Pant: {product.Pant.Value:C} x {quantity}"); 
             }
 
-            grandTotal += groupSubtotal; // Add the group's subtotal to the grand total.
+            groupSubtotal += itemTotalPrice; // Add the item's total price to the group's subtotal.
         }
 
-        // Retrieve and display the last scanned product.
-        var lastScannedProduct = scannedProducts.LastOrDefault();
-        if (lastScannedProduct != null)
-        {
-            Console.WriteLine($"Last Scanned: {lastScannedProduct.Name} @ {lastScannedProduct.Price:C}");
-        }
-
-        // Display the grand total price of all scanned products.
-        Console.WriteLine($"Grand Total: {grandTotal:C}");
+        grandTotal += groupSubtotal; // Add the group's subtotal to the grand total.
     }
 
-    // Utility method to translate product group numbers into group names.
-    private static string GroupNameTranslator(int groupNumber)
+    // Retrieve and display the last scanned product and its standard price.
+    var lastScannedProduct = scannedProducts.LastOrDefault();
+    if (lastScannedProduct != null)
     {
-        switch (groupNumber)
+        // Display the basic information of the last scanned product
+        Console.Write($"Scanned product : {lastScannedProduct.Name} @ {lastScannedProduct.Price:C}");
+
+        // If the last scanned product includes Pant, display the Pant information
+        if (lastScannedProduct.Pant.HasValue)
         {
-            case 1: return "Dairy";
-            case 2: return "Pantry";
-            case 3: return "Beverages";
-            case 4: return "Fresh Produce";
-            case 5: return "Frozen Foods";
-            case 6: return "Snacks";
-            case 7: return "Household Items";
-            case 8: return "Personal Care";
-            case 9: return "Miscellaneous";
-            default: return "Unknown Group";
+            Console.WriteLine($", Pant: {lastScannedProduct.Pant.Value:C}");
+        }
+        else
+        {
+            Console.WriteLine(); // Just end the line if there's no Pant.
         }
     }
+
+
+    // Display the grand total price of all scanned products, including Pant.
+    Console.WriteLine($"Grand Total: {grandTotal:C}");
+}
 }

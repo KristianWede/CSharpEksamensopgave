@@ -60,7 +60,8 @@ public void OnPriceCalculation(List<Product> scannedProducts)
                     itemTotalPrice = quantity * product.Price;
                     Console.WriteLine($" - {product.Name} x{quantity} @ {product.Price:C} each (Standard price)");
                 }
-            }
+            } 
+        
             else
             {
                 // Apply standard pricing
@@ -68,15 +69,21 @@ public void OnPriceCalculation(List<Product> scannedProducts)
                 Console.WriteLine($" - {product.Name} x{quantity} @ {product.Price:C} each (Standard price)");
             }
 
-            groupSubtotal += itemTotalPrice; // Add the item's total price to the group's subtotal.
+            // Add Pant to item total price if applicable
+            if (product.Pant.HasValue)
+            {
+                decimal pantTotal = product.Pant.Value * quantity;
+                itemTotalPrice += pantTotal; // Include Pant in the item total price
+                Console.WriteLine($"Pant: {product.Pant.Value:C} x {quantity} (Total Pant: {pantTotal:C})");
+            }
+
+            groupSubtotal += itemTotalPrice;
         }
 
-        // Display the subtotal for the current group.
         Console.WriteLine($"   Subtotal for Group {GroupNameTranslator(group.Key)}: {groupSubtotal:C}");
-        grandTotal += groupSubtotal; // Add the group's subtotal to the grand total.
+        grandTotal += groupSubtotal;
     }
 
-    // Display the grand total for all items scanned.
     Console.WriteLine($"Grand Total: {grandTotal:C}");
 }
 
@@ -94,6 +101,7 @@ public void OnPriceCalculation(List<Product> scannedProducts)
             case 7: return "Household Items";
             case 8: return "Personal Care";
             case 9: return "Miscellaneous";
+            case 10: return "Pant";
             default: return "Unknown Group";
         }
     }

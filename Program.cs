@@ -20,10 +20,10 @@
             new Product('H', "Rice", 9.00m, 2),
 
             // Beverage Products
-            // 'I' has a promotional price if 3 are purchased
-            new Product('I', "Juice", 15.00m, 3, promotionalPrice: 10.00m, promotionThreshold: 3),
-            // 'J' has a promotional price if 2 are purchased
-            new Product('J', "Water", 20.00m, 3, promotionalPrice: 18.00m, promotionThreshold: 2),
+            // 'I' has a promotional price if 3 are purchased and includes a Pant
+            new Product('I', "Juice", 15.00m, 3, promotionalPrice: 10.00m, promotionThreshold: 3, pant: 1.00m),
+            // 'J' has a promotional price if 2 are purchased and includes a Pant
+            new Product('J', "Water", 20.00m, 3, promotionalPrice: 18.00m, promotionThreshold: 2, pant: 0.50m),
             new Product('K', "Coffee", 12.00m, 3),
             new Product('L', "Tea", 11.00m, 3),
 
@@ -32,8 +32,10 @@
             new Product('N', "Bananas", 2.50m, 4),
             new Product('O', "Carrots", 4.00m, 4),
 
+            // Pant Product
+            new Product('P', "Pant", 0m, 10), // 'P' represents a Pant
+
             // Frozen Foods
-            new Product('P', "Ice Cream", 10.00m, 5),
             new Product('Q', "Frozen Pizza", 12.00m, 5),
             new Product('R', "Frozen Vegetables", 5.50m, 5),
 
