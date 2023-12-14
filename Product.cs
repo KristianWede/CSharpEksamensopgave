@@ -8,7 +8,7 @@ public class Product
     public char? MultipackID { get; set; } = null; // ID of the multipack counterpart, null if none
     public decimal? PromotionalPrice { get; set; } = null; // Null if no promotion is applicable
     public int? PromotionThreshold { get; set; } = null; // Quantity threshold for promotion
-    public decimal? Pant { get; set; } = null; // Pant (deposit) amount, null if no deposit is required
+    public decimal? Pant { get; set; } = null; // Pant amount, null if no deposit is required
 
     // Constructor
     public Product(char id, string name, decimal price, int group, int? multipackQuantity = null, char? multipackID = null, decimal? promotionalPrice = null, int? promotionThreshold = null, decimal? pant = null)

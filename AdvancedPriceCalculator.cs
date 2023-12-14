@@ -14,25 +14,30 @@ public void OnPriceCalculation(List<Product> scannedProducts)
         .GroupBy(p => p.Product.Group)
         .OrderBy(g => g.Key); // Sort the groups for consistent display order.
 
-    decimal grandTotal = 0; // Initialize the grand total, which will sum up the subtotals of all groups.
+    decimal grandTotal = 0; // Grand total, which will sum up the subtotals of all groups.
 
     foreach (var group in groupedProducts) // Iterate through each group of products.
     {
         Console.WriteLine($"Group {GroupNameTranslator(group.Key)}:"); // Display the group name.
         decimal groupSubtotal = 0; // Initialize subtotal for the current group.
 
-        foreach (var item in group) // Iterate through each item in the current group.
+        foreach (var item in group)
         {
-            decimal itemTotalPrice = 0; // Initialize total price for the current item.
-            int quantity = item.Quantity; // Get the quantity of the current item.
+            decimal itemTotalPrice = 0;
+
+            int quantity = item.Quantity;
+
             Product product = item.Product; // Get the product details of the current item.
 
             // If the product is part of a multipack and the quantity is enough to form at least one multipack, apply multipack pricing.
             if (product.MultipackID.HasValue && quantity >= product.MultipackQuantity)
             {
                 Product multipack = allProducts.First(p => p.ID == product.MultipackID.Value); // Find the corresponding multipack product.
+
                 int multipacks = quantity / product.MultipackQuantity.Value; // Calculate how many complete multipacks are present.
+
                 int remainder = quantity % product.MultipackQuantity.Value; // Calculate any remaining items after forming multipacks.
+
                 itemTotalPrice = multipacks * multipack.Price + remainder * product.Price; // Total price considers both multipack and regular items.
                 Console.WriteLine($" - {product.Name} x{quantity} (Multipack applied for {multipacks * product.MultipackQuantity.Value}) @ {itemTotalPrice:C}");
             }

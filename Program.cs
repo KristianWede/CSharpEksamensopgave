@@ -1,6 +1,6 @@
 ﻿public class Program
 {
-    // Method to create and return a list of dummy products for demonstration purposes.
+    // Method to create and return a list of dummy products
     public List<Product> GetDummyProducts()
     {
         return new List<Product>
@@ -55,17 +55,15 @@
         };
     }
 
-    // The main entry point of the program.
     public static void Main()
     {
         Program program = new Program();
         program.InitScanner();
     }
 
-    // Method to initialize the scanning process.
     public void InitScanner()
     {
-        var scanner = new Scanner(); // Create a new scanner object.
+        var scanner = new Scanner();
         var allProducts = GetDummyProducts(); // Retrieve the list of all dummy products.
         var basicCalculator = new BasicPriceCalculator(allProducts); // Initialize the basic price calculator.
         var advancedCalculator = new AdvancedPriceCalculator(allProducts); // Initialize the advanced price calculator.
@@ -97,16 +95,19 @@
             Console.WriteLine("Enter product code or 'exit' to quit:");
             var input = Console.ReadLine();
 
-            if (input == "exit") break; // Exit the loop if the user enters 'exit'.
+            if (input == "exit"){
+                break;
+            }
+            
 
             try
             {
                 var product = CreateProductFromCode(input); // Create a product from the input code.
-                scanner.Scan(product); // Scan the product.
+                scanner.Scan(product);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine(ex.Message); // Handle invalid product codes.
+                Console.WriteLine(ex.Message);
             }
         }
     }
